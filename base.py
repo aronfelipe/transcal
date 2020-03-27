@@ -1,6 +1,8 @@
 import numpy as np
 import math
 
+from xlsx import importa
+
 E = 210*(10**9)
 
 A = 2*10**(-4)
@@ -8,6 +10,27 @@ A = 2*10**(-4)
 l1 = 0.4
 l2 = 0.3
 l3 = 0.5
+
+class Beam:
+    
+
+def numerar_gdl(n_nos):
+    lista_gdl = []
+    for i in range (1, n_nos+1):
+        if len(lista_gdl) < 1:
+            lista_gdl.append([i,1, 2])
+        else:
+            lista_gdl.append([i,lista_gdl[-1][2] + 1, lista_gdl[-1][2] + 2])
+
+    return lista_gdl
+
+def ler_inc():
+    [nn, N, nm, Inc, nc, F, nr, R] = importa("entrada.xlsx")
+    return Inc
+
+def ler_nos():
+    [nn, N, nm, Inc, nc, F, nr, R] = importa("entrada.xlsx")
+    return N
 
 def gerar_matrix_ke(s, c):
     matrix_ke = np.matrix([[c**2, c*s, -c*2, -c*s], [c*s, s**2, -c*s, -s**2], [-c**2, -c*s, c**2, c*s], [-c*s, -s**2, c*s, s**2]])
@@ -76,18 +99,38 @@ def gerar_matrix_kg(matrix_k1, matrix_k2, matrix_k3):
 
     return matrix_kg
 
-matrix_ke1 = gerar_matrix_ke(1, 0)
+# node_one_sin = 1
+# node_one_cos = 0
 
-ke1 = calcular_ke(matrix_ke1, l1, E, A)
+# hip = 0.5
 
-matrix_ke2 = gerar_matrix_ke(0, 1)
+# node_2_sin = calculate_sin(0.3, 0.5)
 
-ke2 = calcular_ke(matrix_ke2, l2, E, A)
+# matrix_ke1 = gerar_matrix_ke(1, 0)
 
-matrix_ke3 = gerar_matrix_ke(-0.8, -0.6)
+# ke1 = calcular_ke(matrix_ke1, l1, E, A)
 
-ke3 = calcular_ke(matrix_ke3, l3, E, A)
+# matrix_ke2 = gerar_matrix_ke(0, 1)
 
-matrix_kg = gerar_matrix_kg(ke1, ke2, ke3)
+# ke2 = calcular_ke(matrix_ke2, l2, E, A)
 
-print(matrix_kg)
+# matrix_ke3 = gerar_matrix_ke(-0.8, -0.6)
+
+# ke3 = calcular_ke(matrix_ke3, l3, E, A)
+
+# matrix_kg = gerar_matrix_kg(ke1, ke2, ke3)
+
+# print(matrix_kg)
+
+matrix_nos = ler_nos()
+
+lista_gdl = numerar_gdl(len(matrix_nos[0,:]))
+
+print(lista_gdl)
+
+# matrix_kg = np.zeros([len(matrix_inc)*2,len(matrix_inc)*2])
+
+# print(matrix_kg)
+
+# for i in range(0, len(matrix_inc)):
+    
