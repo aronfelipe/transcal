@@ -68,7 +68,6 @@ def gerar_matrix_kg(matrix_k1, matrix_k2, matrix_k3):
 
     for i in dictionary_k2:
         split = i.split()
-        print(split)
         matrix_kg[int(split[0]) - 1, int(split[1]) - 1 ] = dictionary_k2[i]
 
     for i in dictionary_k3:
