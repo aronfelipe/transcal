@@ -61,11 +61,6 @@ def gerar_matrix_kg(matrix_k1, matrix_k2, matrix_k3):
             dictionary_k3[key] = val.item(i)
 
     matrix_kg = np.zeros([6,6])   
-    print(dictionary_k1)
-    print(dictionary_k2)
-    print(dictionary_k3)
-
-    print(matrix_kg)
 
     for i in dictionary_k1:
         split = i.split()        
@@ -79,26 +74,6 @@ def gerar_matrix_kg(matrix_k1, matrix_k2, matrix_k3):
     for i in dictionary_k3:
         split = i.split()
         matrix_kg[int(split[0]) - 1, int(split[1]) - 1 ] = dictionary_k3[i]
-    
-    print(matrix_kg)
-
-
-    # for idx, val in enumerate(matrix_k1[0]):
-    #     print(idx, val)
-
-    # for i in range (0, len(matrix_k1)):
-    #     print(matrix_k1[i][0])
-        # for j in range(0, len(matrix_k1[i][0])):
-        #     print(j)
-
-
-    # for i in range(0, lenmatrix_k1):
-    #     for j in i:
-    #         for k in j:
-    #             key = str(str(j) + ":" + str(i))
-    #             dictionary_k[key] = k 
-
-    # print(dictionary_k)
 
 matrix_ke1 = gerar_matrix_ke(1, 0)
 
@@ -112,13 +87,4 @@ matrix_ke3 = gerar_matrix_ke(-0.8, -0.6)
 
 ke3 = calcular_ke(matrix_ke3, l3, E, A)
 
-print(ke1)
-
-print(ke2)
-
-print(ke3)
-
 matrix_kg = gerar_matrix_kg(ke1, ke2, ke3)
-
-
-# matrix_global = np.matrix([[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]])
