@@ -10,8 +10,6 @@ A = 2*10**(-4)
 l1 = 0.4
 l2 = 0.3
 l3 = 0.5
-
-class Beam:
     
 
 def numerar_gdl(n_nos):

@@ -1,4 +1,5 @@
 from read import EntryReader
+
 import numpy as np
 
 class Element:
@@ -16,7 +17,40 @@ class Element:
 
         self.gol = [nodes[0]*2-2, nodes[0]*2-1,nodes[1]*2-2,nodes[1]*2-1]
 
-class TreApp:
+    def generate_matrix(self):
+        matrix_ke = np.matrix([[self.c**2, self.c*s, -self.c*2, -self.c*self.s],
+                               [self.c*self.s, self.s**2, -self.c*self.s, -self.s**2], 
+                               [-self.c**2, -self.c*self.s, self.c**2, self.c*self.s],
+                               [-self.c*self.s, -self.s**2, self.c*self.s, self.s**2]])
+        return matrix_ke
+
+    def calculate_k(self):
+        self.k = (((self.e*self.a)/self.l) * self.gerar_matrix_ke())
+        return ke
+
+class Bridge:
+
+    def __init__(self, elements, loading_vector, ):
+        self.elements = elements
+        self.u = u
+        self.n_nodes = n_nodes
+        self.restriction_vector = restriction_vector
+        self.loading_vector = loading_vector
+        self.matrix_g = np.zeros([n_nos*2, n_nos*2])
+
+    def generate_matrix_g(self):
+
+        # Consctructing the global matrix for the bridge 
+        # taking into account the degrees of freedom of each of the elements
+        # and grouping each matrix of the elements into matrixes of 2x2 elements
+
+        for element in self.elements:
+            self.matrix_g[element.gol[0]:element.gol[1] + 1, element.gol[0]:element.gol[0]+1] +=element.k[0:2, 0:2]
+            self.matrix_g[element.gol[2]:element.gol[3] + 1, element.gol[2]:element.gol[3]+1] +=element.k[2:4, 2:4]
+            self.matrix_g[element.gol[0]:element.gol[1] + 1, element.gol[2]:element.gol[3]+1] +=element.k[0:2, 2:4]
+            self.matrix_g[element.gol[2]:element.gol[3] + 1, element.gol[0]:element.gol[0]+1] +=element.k[2:4, 0:2]
+
+class App:
 
     def __init__(self, entry):
         self.reader = EntryReader(entry)
@@ -41,4 +75,10 @@ class TreApp:
 
 app = TreApp("entrada.xlsx")
 print(app.generate_list_nodes())
-print(app.numerate_gdl())
+print(app.numerate_gol())
+
+elements_list = []
+
+for element in app.numerate_gol():
+    print(element)
+
