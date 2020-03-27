@@ -75,6 +75,8 @@ def gerar_matrix_kg(matrix_k1, matrix_k2, matrix_k3):
         split = i.split()
         matrix_kg[int(split[0]) - 1, int(split[1]) - 1 ] = dictionary_k3[i]
 
+    return matrix_kg
+
 matrix_ke1 = gerar_matrix_ke(1, 0)
 
 ke1 = calcular_ke(matrix_ke1, l1, E, A)
@@ -88,3 +90,5 @@ matrix_ke3 = gerar_matrix_ke(-0.8, -0.6)
 ke3 = calcular_ke(matrix_ke3, l3, E, A)
 
 matrix_kg = gerar_matrix_kg(ke1, ke2, ke3)
+
+print(matrix_kg)
