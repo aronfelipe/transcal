@@ -4,7 +4,7 @@ import numpy as np
 
 class Element:
 
-    def __init__(x_cord_1, y_cord_1, x_cord_2, y_cord_2, A, E, list_nodes):
+    def __init__(self, x_cord_1, y_cord_1, x_cord_2, y_cord_2, A, E, list_nodes):
         self.x = x_cord_2 - x_cord_1
         self.y = y_cord_2 - y_cord_1
 
@@ -36,19 +36,34 @@ class Bridge:
         self.n_nodes = n_nodes
         self.restriction_vector = restriction_vector
         self.loading_vector = loading_vector
-        self.matrix_g = np.zeros([n_nos*2, n_nos*2])
 
     def generate_matrix_g(self):
 
+        # Generating matrix with dimensions n_nodes*2Xn_nodes*2
+
+        matrix_g = np.zeros([self.n_nodes*2, self.n_nodes*2])
+
         # Consctructing the global matrix for the bridge 
         # taking into account the degrees of freedom of each of the elements
-        # and grouping each matrix of the elements into matrixes of 2x2 elements
+        # grouping each matrix of the elements into matrixes of 2x2 elements
 
         for element in self.elements:
-            self.matrix_g[element.gol[0]:element.gol[1] + 1, element.gol[0]:element.gol[0]+1] +=element.k[0:2, 0:2]
-            self.matrix_g[element.gol[2]:element.gol[3] + 1, element.gol[2]:element.gol[3]+1] +=element.k[2:4, 2:4]
-            self.matrix_g[element.gol[0]:element.gol[1] + 1, element.gol[2]:element.gol[3]+1] +=element.k[0:2, 2:4]
-            self.matrix_g[element.gol[2]:element.gol[3] + 1, element.gol[0]:element.gol[0]+1] +=element.k[2:4, 0:2]
+            matrix_g[element.gol[0]:element.gol[1] + 1, element.gol[0]:element.gol[0]+1] += element.k[0:2, 0:2]
+            matrix_g[element.gol[2]:element.gol[3] + 1, element.gol[2]:element.gol[3]+1] += element.k[2:4, 2:4]
+            matrix_g[element.gol[0]:element.gol[1] + 1, element.gol[2]:element.gol[3]+1] += element.k[0:2, 2:4]
+            matrix_g[element.gol[2]:element.gol[3] + 1, element.gol[0]:element.gol[0]+1] += element.k[2:4, 0:2]
+
+        return matrix_g
+
+    def contornate_matrix_g(self, matrix_g):
+
+        matrix_g_c = np.delete(matrix_g, self.restriction_vector, 0)
+        matrix_g_c = np.delete(matrix_g_c, self.restriction_vector, 1)
+
+        loading_vector_c = np.delete(self.loading_vector, self.restriction_vector, 0)
+
+        for force in loading_vector:
+            self.loading_vector_c.append(i[0])
 
 class App:
 
