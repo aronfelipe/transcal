@@ -1,0 +1,28 @@
+Reacoes de apoio [N]
+[array([], shape=(3, 0), dtype=float64)
+ array([], shape=(3, 0), dtype=float64)
+ array([], shape=(3, 0), dtype=float64)
+ array([], shape=(3, 0), dtype=float64)
+ array([], shape=(3, 0), dtype=float64)
+ array([], shape=(3, 0), dtype=float64)]
+
+Deslocamentos [m]
+[0, array([[-4.48956686e-06],
+       [ 1.33452111e-05],
+       [ 4.45428416e-06]]), 0, 0, array([], dtype=float64), 3]
+
+Deformacoes []
+[array([[ 2.24478343e-06],
+       [-6.67260557e-06],
+       [-2.22714208e-06]]), array([], dtype=float64), array([], shape=(3, 0), dtype=float64)]
+
+Forcas internas [N]
+[array([[  94.28090416],
+       [-280.24943392],
+       [ -93.53996743]])
+ array([], dtype=float64) array([], shape=(3, 0), dtype=float64)]
+
+Tensoes internas [Pa]
+[array([[  471404.52079103],
+       [-1401247.16958975],
+       [ -467699.83713865]]), array([], dtype=float64), array([], shape=(3, 0), dtype=float64)]

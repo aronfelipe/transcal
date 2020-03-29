@@ -28,7 +28,7 @@ class Element:
         print(self.e)
         print(self.a)
         print(self.l)
-        self.k = ((self.e[0]*self.a[0])/self.l) * self.generate_matrix()
+        self.k = ((self.e[0]*self.a)/self.l) * self.generate_matrix()
         return self.k
 
 class Bridge:
@@ -139,7 +139,7 @@ class App:
     def generate_list_A(self):
         list_A = []
         for i in Inc:
-            list_A.append(np.array([int(i[3])]))
+            list_A.append(i[3])
         return list_A
 
     def generate_list_E(self):
@@ -218,7 +218,7 @@ internal_forces = bridge.internal_forces(system_strain)
 #Final Graph Ploting
 # xl.plota(N,Inc)
 
-xl.geraSaida("output",support_reaction,bridge.restriction_vector,system_distortion,internal_forces,system_strain)
+xl.geraSaida("output", support_reaction,bridge.restriction_vector,system_distortion,internal_forces,system_strain)
 
 
 # print(app.generate_list_nodes())
