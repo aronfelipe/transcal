@@ -15,7 +15,7 @@ class Element:
         self.s = self.y/self.l
         self.c = self.x/self.l
 
-        self.dof     = [nodes[0]*2-2, nodes[0]*2-1,nodes[1]*2-2,nodes[1]*2-1]
+        self.dof = [nodes[0]*2-2, nodes[0]*2-1,nodes[1]*2-2,nodes[1]*2-1]
 
     def generate_matrix(self):
         matrix_ke = np.matrix([[self.c**2, self.c*self.s, -self.c*2, -self.c*self.s],
@@ -69,7 +69,9 @@ class Bridge:
         tempVar = 0
         print(self.matrix_g)
         print(self.loading_vector)
-        final_restriction_vector = np.linalg.lstsq(self.matrix_g, self.loading_vector)
+        final_restriction_vector = np.linalg.pinv(self.matrix_g).dot(self.loading_vector)
+        print("FINAL")        
+        print(final_restriction_vector)
         for i in self.restriction_vector:
             if i == 0:
                 tempList.append(0)
@@ -80,7 +82,10 @@ class Bridge:
 
     def support_reaction(self):
         self.generate_matrix_g()
-        return np.matmul(self.matrix_g, self.restriction_vector)
+        print("PAPAPA")
+        print(self.matrix_g)
+        print(self.restriction_vector)
+        return self.matrix_g.dot(self.restriction_vector)
 
     def system_distortion(self):
         temp_distortion = []
@@ -114,7 +119,6 @@ class Bridge:
         for element in self.elements:
             temp_area.append(element.a)
         return np.array(strain)* np.array(temp_area)
-
 
 
 class App:
@@ -211,6 +215,10 @@ bridge.generate_matrix_g()
 bridge.boundary_conditions()
 bridge.equation_solver_and_update()
 support_reaction = bridge.support_reaction()
+
+print("SUPPORT")
+print(support_reaction)
+
 system_distortion = bridge.system_distortion()
 system_strain = bridge.system_strain()
 internal_forces = bridge.internal_forces(system_strain)
