@@ -12,15 +12,15 @@ l2 = 0.3
 l3 = 0.5
     
 
-def numerar_gdl(n_nos):
-    lista_gdl = []
+def numerar_dof(n_nos):
+    lista_dof = []
     for i in range (1, n_nos+1):
-        if len(lista_gdl) < 1:
-            lista_gdl.append([i,1, 2])
+        if len(lista_dof) < 1:
+            lista_dof.append([i,1, 2])
         else:
-            lista_gdl.append([i,lista_gdl[-1][2] + 1, lista_gdl[-1][2] + 2])
+            lista_dof.append([i,lista_dof[-1][2] + 1, lista_dof[-1][2] + 2])
 
-    return lista_gdl
+    return lista_dof
 
 def ler_inc():
     [nn, N, nm, Inc, nc, F, nr, R] = importa("entrada.xlsx")
@@ -122,9 +122,9 @@ def gerar_matrix_kg(matrix_k1, matrix_k2, matrix_k3):
 
 matrix_nos = ler_nos()
 
-lista_gdl = numerar_gdl(len(matrix_nos[0,:]))
+lista_dof = numerar_dof(len(matrix_nos[0,:]))
 
-print(lista_gdl)
+print(lista_dof)
 
 # matrix_kg = np.zeros([len(matrix_inc)*2,len(matrix_inc)*2])
 
