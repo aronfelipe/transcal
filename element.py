@@ -13,11 +13,6 @@ class Element:
         self.s = self.y/self.l
         self.c = self.x/self.l
 
-        print(self.l)
-
-        print(self.s)
-        print(self.c)
-
         self.dof = [int(nodes[0]*2-2), int(nodes[0]*2-1), int(nodes[1]*2-2), int(nodes[1]*2-1)]
 
     def generate_matrix(self):

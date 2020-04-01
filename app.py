@@ -33,7 +33,6 @@ class App:
         self.list_matrixes_k = []
         for element in self.list_elements:
             self.list_matrixes_k.append(element.calculate_k())
-            print(element.k)
 
 class Bridge:
 
@@ -48,8 +47,8 @@ class Bridge:
             matrix_g[element.dof[2]:element.dof[3] + 1, element.dof[0]:element.dof[1]+1] += element.k[0:2, 2:4]
             matrix_g[element.dof[0]:element.dof[1] + 1, element.dof[2]:element.dof[3]+1] += element.k[2:4, 0:2]
             matrix_g[element.dof[2]:element.dof[3] + 1, element.dof[2]:element.dof[3]+1] += element.k[2:4, 2:4]
-        print(matrix_g)
         self.matrix_g = matrix_g
+        print(self.matrix_g)
 
 
 app = App("entrada.xlsx")
