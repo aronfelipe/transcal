@@ -13,7 +13,9 @@ class Element:
         self.s = self.y/self.l
         self.c = self.x/self.l
 
-        self.dof = [nodes[0]*2-2, nodes[0]*2-1,nodes[1]*2-2,nodes[1]*2-1]
+        self.dof = [int(nodes[0]*2-2), int(nodes[0]*2-1), int(nodes[1]*2-2), int(nodes[1]*2-1)]
+
+        print(self.dof)
 
     def generate_matrix(self):
         matrix_ke = np.matrix([[self.c**2, self.c*self.s, -self.c*2, -self.c*self.s],

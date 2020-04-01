@@ -30,12 +30,33 @@ class App:
             self.list_elements.append(element)   
 
     def generate_matrixes_k(self):
-        list_matrixes_k = []
+        self.list_matrixes_k = []
         for element in self.list_elements:
-            list_matrixes_k.append(element.calculate_k())
+            self.list_matrixes_k.append(element.calculate_k())
+
+class Bridge:
+
+    def __init__(self, entry, elements):
+        self.list_elements = elements
+        self.reader = Reader(entry)
+
+    def generate_matrix_g(self):
+        matrix_g = np.zeros([self.reader.n_nodes*2, self.reader.n_nodes*2])
+        for element in self.list_elements:
+            matrix_g[element.dof[0]:element.dof[1] + 1, element.dof[0]:element.dof[1]+1] += element.k[0:2, 0:2]
+            matrix_g[element.dof[2]:element.dof[3] + 1, element.dof[0]:element.dof[1]+1] += element.k[0:2, 2:4]
+            matrix_g[element.dof[0]:element.dof[1] + 1, element.dof[2]:element.dof[3]+1] += element.k[2:4, 0:2]
+            matrix_g[element.dof[2]:element.dof[3] + 1, element.dof[2]:element.dof[3]+1] += element.k[2:4, 2:4]
+        print(matrix_g)
+        self.matrix_g = matrix_g
+
 
 app = App("entrada.xlsx")
 app.generate_list_segments()
 app.generate_list_coordinates()
 app.crete_elements()
 app.generate_matrixes_k()
+
+bridge = Bridge("entrada.xlsx", app.list_elements)
+
+bridge.generate_matrix_g()
