@@ -33,6 +33,7 @@ class App:
         self.list_matrixes_k = []
         for element in self.list_elements:
             self.list_matrixes_k.append(element.calculate_k())
+            print(element.k)
 
 class Bridge:
 

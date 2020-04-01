@@ -13,18 +13,21 @@ class Element:
         self.s = self.y/self.l
         self.c = self.x/self.l
 
+        print(self.l)
+
+        print(self.s)
+        print(self.c)
+
         self.dof = [int(nodes[0]*2-2), int(nodes[0]*2-1), int(nodes[1]*2-2), int(nodes[1]*2-1)]
 
-        print(self.dof)
-
     def generate_matrix(self):
-        matrix_ke = np.matrix([[self.c**2, self.c*self.s, -self.c*2, -self.c*self.s],
-                               [self.c*self.s, self.s**2, -self.c*self.s, -self.s**2], 
-                               [-self.c**2, -self.c*self.s, self.c**2, self.c*self.s],
-                               [-self.c*self.s, -self.s**2, self.c*self.s, self.s**2]])
+        matrix_ke = np.matrix([[self.c**2, self.c*self.s, -(self.c**2), -(self.c*self.s)],
+                               [self.c*self.s, self.s**2, -(self.c*self.s), -(self.s**2)], 
+                               [-(self.c**2), -(self.c*self.s), self.c**2, self.c*self.s],
+                               [-(self.c*self.s), -(self.s**2), (self.c*self.s), self.s**2]])
         
         return matrix_ke
 
     def calculate_k(self):
-        self.k = ((self.e*self.a)/self.l) * self.generate_matrix()
+        self.k = np.dot(self.generate_matrix(), self.e*self.a/self.l)
         return self.k
