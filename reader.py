@@ -11,4 +11,4 @@ class Reader:
         self.n_charges = nc
         self.loading_vector = F
         self.n_restrictions = nr
-        self.restriction_vector = R
+        self.restrictions_vector = R
