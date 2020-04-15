@@ -53,6 +53,46 @@ def plota(N,Inc):
     plt.grid(True)
     plt.axis('equal')
     plt.show()
+
+def plota_ponte(N,Inc):
+    # Numero de membros
+    nm = len(Inc[:,0])
+    
+    import matplotlib as mpl
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+#    plt.show()
+    fig = plt.figure()
+
+    cargax = np.array([0.19, 0.20, 0.20, 0.20, 0.21])
+    cargay = np.array([0.47, 0.45, 0.51, 0.45, 0.47]) - 0.11
+    plt.plot(cargax - 0.04, cargay, "g", linewidth=2)
+    plt.plot(cargax + 0.04, cargay, "g", linewidth=2)
+
+    k = 0.05
+    caixax = np.array([0,          0,   0.05,  0.05,  0.45,   0.45,    0.5, 0.5, 0]) - 0.05
+    caixay = np.array([0, 0.15+2*k, 0.15+2*k, 1.2*k, 1.2*k, 0.15+2*k, 0.15+2*k,   0, 0]) - 2*k
+
+    plt.plot(caixax, caixay, "b", linewidth=2)
+
+    # Passa por todos os membros
+    for i in range(nm):
+        
+        # encontra no inicial [n1] e final [n2] 
+        n1 = int(Inc[i,0])
+        n2 = int(Inc[i,1])
+        plt.plot([N[0,n1-1],N[0,n2-1]],[N[1,n1-1],N[1,n2-1]], color='r', linewidth=2)
+        plt.plot(N[0,n1-1], N[1,n1-1], "go")
+        plt.plot(N[0,n2-1], N[1,n2-1], "go")
+        plt.text(N[0,n1-1]+0.01, N[1,n1-1], str(n1), fontsize=10)
+        plt.text(N[0,n2-1]+0.01, N[1,n2-1], str(n2), fontsize=10)
+
+    plt.xlabel('x [m]')
+    plt.ylabel('y [m]')
+    plt.grid(True)
+    plt.axis('equal')
+    plt.show()
     
 def importa(entradaNome):
     

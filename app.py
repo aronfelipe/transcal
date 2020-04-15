@@ -9,6 +9,9 @@ class App:
     def __init__(self, entry):
         self.reader = Reader(entry)
 
+    def plotStuff(self):
+        return self.reader.nodes_matrix,self.reader.incidence_matrix
+
     def generate_list_segments(self):
         self.list_segments = []
         for i in self.reader.incidence_matrix:
@@ -120,7 +123,7 @@ class Bridge:
             temp_global_restriction = np.array(temp_global_restriction)
             temp_distortion.append(np.matmul(temp_matrix, temp_global_restriction)/element.l)
 
-        return temp_distortion
+        return np.array(temp_distortion)
 
     def system_strain(self):
         temp_strain = []
@@ -133,7 +136,7 @@ class Bridge:
                 i += 1
             temp_global_restriction = temp_global_restriction
             temp_strain.append(element.e*np.matmul(temp_matrix, temp_global_restriction)/element.l)
-        return temp_strain
+        return np.array(temp_strain)
 
     def internal_forces(self,strain):
         intern_forces = np.zeros([len(self.list_elements), 1])
@@ -143,7 +146,35 @@ class Bridge:
 
         return intern_forces
 
-app = App("entrada.xlsx")
+    def checkLimits(self,strain,desloc,deform):
+        """
+            Checa se a estrutura está dentro das limitações.
+        """
+
+        for element in self.list_elements:
+            if (element.l > 0.11):
+                print(f"Um elemento tem comprimento maior que 110mm")
+                return 1
+
+        for i in range(len(strain)):
+            if (abs(strain[i]) > 18.3E6):
+                print(f"Tensao no elemento {i} acima do limite: {strain[i]}")
+                return 1
+
+        for i in range(len(deform)):
+            if (abs(deform[i]) > 0.05):
+                print(f"Deformacao no elemento {i} acima do limite: {deform[i]}")
+                return 1
+
+        for i in range(len(desloc)):
+            if (abs(desloc[i]) > 0.02):
+                print(f"Deslocamento no elemento {i} acima do limite: {desloc[i]}")
+                return 1
+        return 0
+
+app = App("ponte_final_grupo5.xlsx")
+N, Inc = app.plotStuff()
+xl.plota_ponte(N,Inc)
 app.generate_list_segments()
 app.generate_list_coordinates()
 app.crete_elements()
@@ -153,7 +184,7 @@ restriction_vector_origin = app.generate_restriction_vector_origin()
 loading_vector = app.generate_load_vector()
 restriction_vector = app.generate_restriction_vector(loading_vector,restriction_vector_origin)
 
-bridge = Bridge("entrada.xlsx", app.list_elements, restriction_vector, loading_vector)
+bridge = Bridge("ponte_final_grupo5.xlsx", app.list_elements, restriction_vector, loading_vector)
 
 bridge.generate_matrix_g()
 bridge.boundary_conditions()
@@ -168,5 +199,10 @@ system_distortion = bridge.system_distortion()
 internal_forces = bridge.internal_forces(system_strain)
 
 support_reaction = bridge.support_reaction()
+
+checkLimits = bridge.checkLimits(system_strain,bridge.restriction_vector,system_distortion)
+
+if checkLimits==1:
+    print("Deu ruim")
 
 xl.geraSaida("output", support_reaction, bridge.restriction_vector,system_distortion,internal_forces,system_strain)
